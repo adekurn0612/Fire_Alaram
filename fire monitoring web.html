@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <title>FIRE ALARM</title>
+         <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>   -->
+
+</head>
+<body>
+  <div class="area" >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+
+    <br></br>
+<h1 class="h1" align="center">MONITORING FIRE ALARM</h1>
+<p class="ket" align="center">Di Bawah Ini Dapat Memonitor Secara Realtime (FIRE , GAS , TEMPERATURE)</p>
+
+
+<div class="container">
+  <div class=button-55>
+    Gas: <gas></gas><br>
+  </div>
+  <div class=button-55>
+  Api: <sensorapi></sensorapi><br>
+  </div>
+
+  <div class=button-55>
+   Hummidity: <humid></humid><br>
+  </div>
+
+
+  <div class=button-55>
+  Temperature: <temp></temp><br>
+  </div>
+
+  <br></br><br></br>
+  <div class=button-34>
+ Clock : <clock></clock><br>
+</div>
+
+
+</div >
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+
+      <script>
+            
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+           const firebaseConfig = {
+            apiKey: "AIzaSyCADWkWENdnpsGMx2g-T270z4GejSVFuYo",
+            authDomain: "fire-system-home.firebaseapp.com",
+            databaseURL: "https://fire-system-home-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "fire-system-home",
+            storageBucket: "fire-system-home.appspot.com",
+            messagingSenderId: "11690449391",
+            appId: "1:11690449391:web:df70611cc0b1aba4aefe1a",
+            measurementId: "G-BSCT5N2F0Z"
+          };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+        
+        <script type="text/javascript">
+            
+            var gas_sensor = document.querySelector('gas');
+            var flame_sensor = document.querySelector('sensorapi');
+            var humidity = document.querySelector('humid');
+            var temperature= document.querySelector('temp');
+            var c = document.querySelector('clock');
+
+            var pad = function(x){
+                return x < 10 ? '0'+x : x;
+            }
+
+            var ShowClock = function(){
+                var d = new Date();
+                var h = pad(d.getHours());
+                var m = pad(d.getMinutes());
+                var s = pad(d.getSeconds());
+
+                c.innerHTML = [h,m,s].join(':');
+            }
+
+            setInterval(ShowClock,1000);
+
+            var firebaseRef = firebase.database().ref("FirebaseIOT/");
+            firebaseRef.on("value",function(snapshot){
+                data = snapshot.val();
+                gas_sensor.innerHTML = data.gas_sensor;
+                flame_sensor.innerHTML = data.flame_sensor;
+                humidity.innerHTML = data.humidity;
+                temperature.innerHTML = data.temperature;
+
+            })
+
+        </script>
+ </body>
+ </html>
+
+
+
+
+
